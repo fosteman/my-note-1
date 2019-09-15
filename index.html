@@ -6,6 +6,7 @@
     <title>Note Taker</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
+
 </head>
 
 <body>
@@ -14,11 +15,18 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/1.3.8/FileSaver.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.debug.js" integrity="sha384-NaWTHo/8YCBYJ59830LTz/P4aQZK1sS0SneOgAvhsIl3zBu8r9RevNg5lHCHAuQ/" crossorigin="anonymous"></script>
 <div style="margin: 15px">
 <h1>Note Taker</h1>
 <h5>Write a note, save the content to a text file by clicking save. Clear to default string by pressing reset.</h5>
 <div style="border: 1px black solid; min-height: 200px; max-width: 500px" id="notepad" contenteditable></div>
-<div class="mt-1"><button type="button" class="btn btn-success" onclick="saveFile()">Save</button><span class="ml-1"><button type="button" class="btn btn-danger" onclick="reset()">Reset</button></span></div>
+<div class="mt-1">
+    <button type="button" class="btn btn-success" onclick="saveFile()">Save</button>
+    <button type="button" class="btn btn-success" onclick="createPDF()">Print</button>
+    <span class="ml-1">
+        <button type="button" class="btn btn-danger" onclick="reset()">Reset</button>
+    </span>
+</div>
 </div>
 
 </body>
@@ -47,5 +55,14 @@
         saveAs(file);
     }
 
+    function createPDF() {
+      var doc = new jsPDF();
+      var textToPrint = `
+              S-arika's note: ${document.querySelector("#notepad").innerHTML} \n
+              ~
+              `;
+      doc.text(textToPrint, 10, 10);
+      doc.save('S-arika-Note.pdf')
+    }
 </script>
 </html>
